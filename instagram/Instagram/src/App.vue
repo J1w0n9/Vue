@@ -2,20 +2,20 @@
   <div>
     <div class="header">
       <ul class="header-button-left">
-        <li>Cancel</li>
+        <li v-on:click="step=0">Cancel</li>
       </ul>
       <ul class="header-button-right">
-        <li>Next</li>
+        <li v-on:click="step++">Next</li>
       </ul>
       <img src="./assets/logo.svg" class="logo" />
     </div>
 
-    <Container :posts="posts" />
+    <Container :posts="posts" :step="step" :image="image"/>
     <button @click="more">더보기</button>
 
     <div class="footer">
       <ul class="footer-button-plus">
-        <input type="file" id="file" class="inputfile" />
+        <input @change="upload" multiple accept="image/*" type="file" id="file" class="inputfile" />
         <label for="file" class="input-plus">+</label>
       </ul>
     </div>
@@ -34,8 +34,10 @@ export default {
   },
   data() {
     return {
+      step:0,
       moreCount: 0,
-      posts
+      posts,
+      image : ''
     };
   },
   methods: {
@@ -43,8 +45,32 @@ export default {
       const url = `https://qkrwpgus.github.io/vue/more${this.moreCount}.json`;
       axios.get(url).then((result) => {
         this.posts.push(...result.data);
-        this.moreCount++;
+        this.moreCount += 1;
       });
+    },
+
+  upload(e){
+      let 파일 = e.target.files;
+      console.log(파일);
+      console.log(파일[0]);
+      let url = URL.createObjectURL(파일[0]);
+      console.log(url);
+      this.image = url;
+      this.step=1;
+    },
+  publish() {
+      var 내게시물 = {
+        name: "Kim Hyun",
+        userImage: "https://picsum.photos/100?random=3",
+        postImage: "https://picsum.photos/600?random=3",
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: "오늘 무엇을 했냐면요 아무것도 안했어요 ?",
+        filter: "perpetua"
+      };
+      this.posts.unshift(내게시물);
+      this.step = 0;
     }
   }
 };
