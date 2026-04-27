@@ -1,4 +1,3 @@
-// Post.vue
 <template>
   <div class="post">
     <div class="post-header">
@@ -10,7 +9,11 @@
     </div>
 
     <div class="post-body">
-      <img :src="post.postImage" :class="post.filter" />
+      <div 
+        class="post-image"
+        :class="post.filter"
+        :style="{ backgroundImage: `url(${post.postImage})` }"
+      ></div>
     </div>
 
     <div class="post-content">

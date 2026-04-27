@@ -2,18 +2,19 @@
   <div>
     <div class="header">
       <ul class="header-button-left">
-        <li v-on:click="step=0">Cancel</li>
+        <li v-on:click="step=0" v-if="step > 0">Cancel</li>
       </ul>
       <ul class="header-button-right">
-        <li v-on:click="step++">Next</li>
+        <li v-on:click="step++" v-if="0 < step && step < 2">Next</li>
+        <li v-on:click="publish" v-if ="step >= 2">발행</li>
       </ul>
       <img src="./assets/logo.svg" class="logo" />
     </div>
 
-    <Container :posts="posts" :step="step" :image="image"/>
-    <button @click="more">더보기</button>
+    <Container :posts="posts" :step="step" :image="image" @content="content = $event"/>
+    <button @click="more" v-if="step == 0">더보기</button>
 
-    <div class="footer">
+    <div class="footer" v-if="step == 0">
       <ul class="footer-button-plus">
         <input @change="upload" multiple accept="image/*" type="file" id="file" class="inputfile" />
         <label for="file" class="input-plus">+</label>
@@ -37,7 +38,8 @@ export default {
       step:0,
       moreCount: 0,
       posts,
-      image : ''
+      image : '',
+      content : ''
     };
   },
   methods: {
@@ -59,17 +61,22 @@ export default {
       this.step=1;
     },
   publish() {
+      console.log('publish called');
+      console.log('image:', this.image);
+      console.log('content:', this.content);
       var 내게시물 = {
         name: "Kim Hyun",
         userImage: "https://picsum.photos/100?random=3",
-        postImage: "https://picsum.photos/600?random=3",
-        likes: 36,
-        date: "May 15",
+        postImage: this.image,
+        likes: 0,
+        date: new Date().toLocaleDateString(),
         liked: false,
-        content: "오늘 무엇을 했냐면요 아무것도 안했어요 ?",
-        filter: "perpetua"
+        content: this.content,
+        filter: ""
       };
+      console.log('새 게시물:', 내게시물);
       this.posts.unshift(내게시물);
+      console.log('posts length:', this.posts.length);
       this.step = 0;
     }
   }
