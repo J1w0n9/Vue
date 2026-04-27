@@ -26,7 +26,7 @@
 import data from './assets/oneroom';
 import Discount from './components/Discount.vue';
 import Modal from './components/Modal.vue';
-import Card from './components/card.vue';
+import Card from './components/Card.vue';
 
 export default {
   name : 'App',
