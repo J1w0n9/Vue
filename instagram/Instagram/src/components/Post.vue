@@ -1,3 +1,4 @@
+// Post.vue
 <template>
   <div class="post">
     <div class="post-header">
@@ -7,7 +8,6 @@
       ></div>
       <span class="profile-name">{{ post.name }}</span>
     </div>
-
     <div class="post-body">
       <div 
         class="post-image"
@@ -15,7 +15,6 @@
         :style="{ backgroundImage: `url(${post.postImage})` }"
       ></div>
     </div>
-
     <div class="post-content">
       <p>{{ post.likes }} Likes</p>
       <p>
@@ -32,6 +31,6 @@ export default {
   name: 'Post',
   props: {
     post: Object,
-  }
+  },
 };
 </script>
