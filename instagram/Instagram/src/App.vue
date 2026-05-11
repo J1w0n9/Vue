@@ -28,7 +28,7 @@
 
 <script>
 import Container from './components/Container.vue';
-import posts from './Post.js';
+import posts from './assets/post.js';
 
 export default {
   name: 'App',
